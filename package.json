@@ -1,13 +1,18 @@
 {
   "name": "footballbin-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for FootballBin football match predictions",
-  "main": "dist/handler.js",
+  "description": "MCP server for FootballBin football match predictions - Premier League & Champions League",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "footballbin-mcp": "./dist/index.js"
+  },
+  "mcpName": "io.github.billychl1/footballbin-mcp-server",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "deploy:dev": "sam deploy --template-file template.yaml --stack-name footballbin-mcp-dev --parameter-overrides Stage=dev",
-    "deploy:prod": "sam deploy --template-file template.yaml --stack-name footballbin-mcp-prod --parameter-overrides Stage=prod"
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -18,20 +23,33 @@
     "champions-league",
     "predictions",
     "ai",
-    "claude"
+    "claude",
+    "anthropic"
   ],
-  "author": "FootballBin",
+  "author": "billychl1",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/billychl1/footballbin-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/billychl1/footballbin-mcp-server/issues"
+  },
+  "homepage": "https://github.com/billychl1/footballbin-mcp-server#readme",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.700.0",
-    "@aws-sdk/lib-dynamodb": "^3.700.0"
+    "@modelcontextprotocol/sdk": "^1.25.0",
+    "zod": "^3.25.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
   },
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }
