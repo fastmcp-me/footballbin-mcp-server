@@ -1,11 +1,11 @@
 {
   "name": "footballbin-mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP server for FootballBin football match predictions - Premier League & Champions League",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "footballbin-mcp": "./dist/index.js"
+    "footballbin-mcp-server": "./dist/index.js"
   },
   "mcpName": "io.github.billychl1/footballbin-mcp-server",
   "scripts": {
