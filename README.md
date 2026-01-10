@@ -38,7 +38,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "footballbin": {
       "command": "npx",
-      "args": ["footballbin-mcp-server"]
+      "args": ["-y", "footballbin-mcp-server"]
     }
   }
 }
@@ -47,6 +47,21 @@ Add to your `claude_desktop_config.json`:
 **Config file location:**
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**Troubleshooting:** If the server fails to connect, try installing globally first:
+```bash
+npm install -g footballbin-mcp-server
+```
+Then use this config:
+```json
+{
+  "mcpServers": {
+    "footballbin": {
+      "command": "footballbin-mcp-server"
+    }
+  }
+}
+```
 
 ### Claude.ai (Remote)
 
