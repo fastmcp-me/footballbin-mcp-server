@@ -6,6 +6,10 @@
 
 A Model Context Protocol (MCP) server that provides AI agents with access to football match predictions for the Premier League and Champions League.
 
+## Requirements
+
+- **Node.js 18+** (check with `node --version`)
+
 ## Installation
 
 ### Option 1: npm (Recommended)
@@ -29,16 +33,72 @@ https://ru7m5svay1.execute-api.eu-central-1.amazonaws.com/prod/mcp
 
 ## Quick Start
 
+### Claude.ai (Easiest - No Install)
+
+1. Go to **Settings > Connectors**
+2. Click **Add custom connector**
+3. Enter: `https://ru7m5svay1.execute-api.eu-central-1.amazonaws.com/prod/mcp`
+
 ### Claude Desktop
 
-Add to your `claude_desktop_config.json`:
+**Requires Node.js 18+**
+
+**Step 1:** Install globally
+```bash
+npm install -g footballbin-mcp-server
+```
+
+**Step 2:** Find your Node.js path (must be v18+)
+```bash
+which node && node --version
+```
+
+**Step 3:** Add to `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "footballbin": {
-      "command": "npx",
-      "args": ["-y", "footballbin-mcp-server"]
+      "command": "/path/to/node",
+      "args": ["/path/to/node_modules/footballbin-mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+**Example configs:**
+
+macOS with nvm:
+```json
+{
+  "mcpServers": {
+    "footballbin": {
+      "command": "/Users/YOU/.nvm/versions/node/v20.x.x/bin/node",
+      "args": ["/Users/YOU/.nvm/versions/node/v20.x.x/lib/node_modules/footballbin-mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+macOS with Homebrew:
+```json
+{
+  "mcpServers": {
+    "footballbin": {
+      "command": "/opt/homebrew/bin/node",
+      "args": ["/opt/homebrew/lib/node_modules/footballbin-mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+Windows:
+```json
+{
+  "mcpServers": {
+    "footballbin": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": ["C:\\Users\\YOU\\AppData\\Roaming\\npm\\node_modules\\footballbin-mcp-server\\dist\\index.js"]
     }
   }
 }
@@ -48,26 +108,12 @@ Add to your `claude_desktop_config.json`:
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
-**Troubleshooting:** If the server fails to connect, try installing globally first:
-```bash
-npm install -g footballbin-mcp-server
-```
-Then use this config:
-```json
-{
-  "mcpServers": {
-    "footballbin": {
-      "command": "footballbin-mcp-server"
-    }
-  }
-}
-```
+### Other MCP Clients
 
-### Claude.ai (Remote)
-
-1. Go to **Settings > Connectors**
-2. Click **Add custom connector**
-3. Enter: `https://ru7m5svay1.execute-api.eu-central-1.amazonaws.com/prod/mcp`
+Use the remote endpoint:
+```
+https://ru7m5svay1.execute-api.eu-central-1.amazonaws.com/prod/mcp
+```
 
 ## Features
 
