@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: FootballBin MCP Server - AI Match Predictions via Model Context Protocol
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+
+Resources:
+  # MCP API Gateway (no API key required)
+  MCPApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      Cors:
+        AllowMethods: "'POST,OPTIONS'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+
+  # MCP Server Function
+  MCPServerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub footballbin-mcp-server-${Stage}
+      CodeUri: dist/
+      Handler: handler.handler
+      Runtime: nodejs20.x
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+          APP_STORE_LINK: https://apps.apple.com/app/footballbin/id6757111871
+          MATCHES_TABLE: !Sub footballbin-matches-${Stage}
+          MATCHWEEKS_TABLE: !Sub footballbin-matchweeks-${Stage}
+          DEFAULT_REGION: !Ref AWS::Region
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Sub footballbin-matches-${Stage}
+        - DynamoDBReadPolicy:
+            TableName: !Sub footballbin-matchweeks-${Stage}
+      Events:
+        MCPEndpoint:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MCPApi
+            Path: /mcp
+            Method: POST
+
+Outputs:
+  MCPEndpoint:
+    Description: MCP Server endpoint URL
+    Value: !Sub https://${MCPApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/mcp
